@@ -40,3 +40,38 @@ END
     content = output_file.read_text()
     assert "值" in content  # translation applied
     assert "payload" in content
+
+
+def test_pipeline_contract(tmp_path):
+    repo_root = Path(__file__).resolve().parents[1]
+    src_path = repo_root / "src"
+    if str(src_path) not in sys.path:
+        sys.path.insert(0, str(src_path))
+
+    from mybugreport.models import DeviceInfo
+    from mybugreport.pipeline.collect import collect_existing_artifact, write_artifacts_index
+    from mybugreport.pipeline.parse import parse_artifacts_to_records
+    from mybugreport.pipeline.analyze import summarize_records
+    from mybugreport.pipeline.report import render_report_markdown
+
+    bugreport = tmp_path / "bugreport.txt"
+    bugreport.write_text("line1\nline2\n")
+
+    device = DeviceInfo(serial="demo", model="Demo")
+    artifacts_dir = tmp_path / "collect"
+    artifact = collect_existing_artifact(bugreport, device, artifacts_dir)
+    artifacts_index = artifacts_dir / "artifacts.json"
+    write_artifacts_index([artifact], artifacts_index)
+
+    records_dir = tmp_path / "parse"
+    records = parse_artifacts_to_records([bugreport], records_dir)
+    findings_path = tmp_path / "findings.json"
+    summarize_records(records[0], findings_path)
+
+    report_dir = tmp_path / "report"
+    report_path = report_dir / "report.md"
+    render_report_markdown(findings_path, report_path, artifacts_path=artifacts_index)
+
+    assert artifacts_index.exists()
+    assert findings_path.exists()
+    assert report_path.exists()

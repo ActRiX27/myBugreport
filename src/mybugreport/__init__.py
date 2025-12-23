@@ -11,4 +11,7 @@ __all__ = [
     "io_utils",
     "hooks",
     "cli",
+    "pipeline",
+    "models",
+    "utils",
 ]

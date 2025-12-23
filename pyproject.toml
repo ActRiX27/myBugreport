@@ -21,3 +21,4 @@ where = ["src"]
 [project.scripts]
 datalogic = "mybugreport.cli:main"
 adb_log_tool = "mybugreport.cli:main"
+mybugreport-pipeline = "mybugreport.cli:pipeline_main"

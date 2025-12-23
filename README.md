@@ -15,6 +15,7 @@ myBugReport 仍是一个用于对 Android bugreport 文本进行后处理的开�
 - 按 `rule.txt` 的键值对替换关键字为中文描述。
 - 将 `2h`、`15m`、`-3s` 等时长标记转换为中文可读格式。
 - 提供可选的调试日志、严格校验与容错策略，默认关闭以保持兼容。
+- 预置 collect → parse → analyze → report 的工程化流水线骨架，便于后续迭代。
 
 ## 使用方法
 ```bash
@@ -45,6 +46,25 @@ datalogic "2024-06-21" bugreport.txt out.txt 1
 python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 ```
 
+### 新增流水线子命令（占位骨架）
+```bash
+# 采集（索引已有 bugreport）
+mybugreport-pipeline collect bugreport.txt .work/collect SERIAL MODEL
+
+# 解析为 records.jsonl
+mybugreport-pipeline parse bugreport.txt .work/parse/records.jsonl --source bugreport
+
+# 基线分析
+mybugreport-pipeline analyze .work/parse/records.jsonl .work/analyze/findings.json
+
+# 渲染报告（Markdown + JSON）
+mybugreport-pipeline report .work/analyze/findings.json .work/report/report.md --artifacts .work/collect/artifacts.json
+
+# 一键串行（collect→parse→analyze→report）
+mybugreport-pipeline pipeline bugreport.txt .work SERIAL MODEL
+```
+> 子命令基于占位实现，默认不改变原有 CLI 的行为，可作为后续扩展的接口骨架。
+
 ## 配置与可选开关
 - `MYBUGREPORT_RULE_FILE`：覆盖 `rule.txt` 路径。
 - `MYBUGREPORT_SECTION_RULE_FILE`：覆盖 `rule2.txt` 路径。
@@ -54,6 +74,7 @@ python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 - `MYBUGREPORT_WARN_ON_MISSING_RULES`：在容错开启且规则缺失时输出警告（默认关闭）。
 - `MYBUGREPORT_CHECK_OUTPUT_NONEMPTY`：可选输出一致性检查（默认关闭），用于严格场景提醒输出为空。
 - Hook 扩展：`processor.apply_translations_and_time` 接受可选后置处理函数列表，便于插件式扩展（默认不传）。
+- 流水线 CLI：`mybugreport-pipeline` 暴露 collect/parse/analyze/report/pipeline 子命令，当前实现为骨架级别，输出契约稳定可供集成。
 
 ## 配置文件格式
 - `rule.txt`：`key:value` 对，定义关键字替换；格式错误的行会被忽略。
@@ -74,8 +95,59 @@ python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 - `mybugreport/io_utils.py`：带可选校验/容错的文件读取工具。
 - `mybugreport/hooks.py`：可插拔的后置处理 hook 工具。
 - `mybugreport/forensic_analysis.py`：可选的取证评分与特征说明（默认未接入 CLI）。
+- `mybugreport/pipeline/collect|parse|analyze|report/`：工程化流水线占位实现，约定各阶段输入/输出。
+- `mybugreport/models/`：JSON 可序列化的数据模型基类。
+- `mybugreport/utils/`：序列化等通用工具。
 - `tests/data/`：预留的样例数据目录（当前为空），便于未来添加回归测试输入输出。
 - `pipeline/ingest|analyze|report/`：三阶段占位目录，记录尚需补充的采集、分析、报告链路。
+- `examples/`：示例与占位数据目录。
+- `docs/PIPELINE_CONTRACT.md`：流水线契约草案与 CLI 子命令设计。
+
+## 数据模型（JSON 可序列化）
+- `DeviceInfo`: serial, model?, android_version?, build_fingerprint?, notes?
+- `CollectArtifact`: path, captured_at, device?, artifact_type, sha256?, size_bytes?
+- `LogRecord`: ts?, level?, tag?, msg, raw, source
+- `Finding`: rule_id, severity, evidence(dict), confidence, summary?
+- `ReportData`: device?, artifacts[], findings[], generated_at, summary?, template?
+
+### 文件示例
+```json
+// collect/artifacts.json
+[
+  {
+    "path": "bugreport.txt",
+    "captured_at": "2024-01-01T00:00:00Z",
+    "device": {"serial": "ABC", "model": "Pixel"},
+    "artifact_type": "bugreport",
+    "sha256": "..."
+  }
+]
+```
+
+```json
+// analyze/findings.json
+[
+  {
+    "rule_id": "baseline.count",
+    "severity": "info",
+    "confidence": 0.25,
+    "evidence": {"records": 5},
+    "summary": "Record count placeholder for downstream analysis"
+  }
+]
+```
+
+## 流水线契约（占位）
+- **collect 输出**：`artifacts.json`（列表），字段见上表。
+- **parse 输出**：`*.records.jsonl`，每行一个 `LogRecord`（保留原始行在 `raw` 字段）。
+- **analyze 输出**：`findings.json`，列表形式，字段为 `Finding`。
+- **report 输出**：`report.md` + 同名 `report.json`，基于 `ReportData` 渲染。
+
+CLI 子命令草案已在“新增流水线子命令”中给出，命名与路径约定为：
+- collect：输出 `collect/artifacts.json`
+- parse：输出 `parse/<artifact>.records.jsonl`
+- analyze：输出 `analyze/findings.json`
+- report：输出 `report/report.md`（和 JSON）
 
 ## 扩展能力说明
 - 调试/校验/容错开关见“配置与可选开关”章节，全部默认关闭以保证兼容。
