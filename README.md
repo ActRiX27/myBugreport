@@ -4,6 +4,11 @@ myBugReport 聚焦移动终端取证行为的实时识别：针对传统依赖�
 
 myBugReport 仍是一个用于对 Android bugreport 文本进行后处理的开发者工具，保留原有 CLI 兼容性并提供可选扩展能力。
 
+## 待补全链路（规划占位）
+- Ingest（待实现）：通过 ADB 获取 bugreport/log，形成 CLI 可用的文本输入（见 `pipeline/ingest/README.md`）。
+- Analyze（待实现）：对采集的日志进行 L1/L2/L3/L4 特征提取、时序模板匹配与概率融合（见 `pipeline/analyze/README.md`）。
+- Report（待实现）：生成取证检测报告/摘要，保持隐私友好与审计留痕（见 `pipeline/report/README.md`）。
+
 ## 功能概览
 - 根据指定时间戳（支持多个）提取上下文日志片段。
 - 按 `rule2.txt`（可被环境变量覆盖）抽取媒体 Provider 相关段落。
@@ -57,6 +62,7 @@ python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 - `mybugreport/hooks.py`：可插拔的后置处理 hook 工具。
 - `mybugreport/forensic_analysis.py`：可选的取证评分与特征说明（默认未接入 CLI）。
 - `tests/data/`：预留的样例数据目录（当前为空），便于未来添加回归测试输入输出。
+- `pipeline/ingest|analyze|report/`：三阶段占位目录，记录尚需补充的采集、分析、报告链路。
 
 ## 扩展能力说明
 - 调试/校验/容错开关见“配置与可选开关”章节，全部默认关闭以保证兼容。
