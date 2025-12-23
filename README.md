@@ -50,6 +50,7 @@ python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 ```bash
 # 采集（索引已有 bugreport）
 mybugreport-pipeline collect bugreport.txt .work/collect SERIAL MODEL
+mybugreport-pipeline tool collect adb --serial SERIAL --out .work/adb --buffers main,system --dmesg --bugreport
 
 # 解析为 records.jsonl
 mybugreport-pipeline parse bugreport.txt .work/parse/records.jsonl --source bugreport

@@ -26,6 +26,8 @@ class CollectArtifact:
     artifact_type: str = "bugreport"
     sha256: Optional[str] = None
     size_bytes: Optional[int] = None
+    command: Optional[str] = None  # 新增：记录采集命令（可选，便于追溯）
+    metadata: Optional[Dict[str, Any]] = None  # 新增：扩展字段占位
 
 
 @dataclass

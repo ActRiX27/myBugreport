@@ -75,3 +75,42 @@ def test_pipeline_contract(tmp_path):
     assert artifacts_index.exists()
     assert findings_path.exists()
     assert report_path.exists()
+
+
+def test_collect_adb_mock(tmp_path):
+    repo_root = Path(__file__).resolve().parents[1]
+    src_path = repo_root / "src"
+    if str(src_path) not in sys.path:
+        sys.path.insert(0, str(src_path))
+
+    from mybugreport.pipeline.collect import adb as adb_collect
+
+    calls = {}
+
+    def fake_runner(cmd, timeout=None):
+        calls.setdefault("commands", []).append(cmd)
+        class Proc:
+            returncode = 0
+            stdout = "fake-output"
+            stderr = ""
+        return Proc()
+
+    out_dir = tmp_path / "out"
+    artifacts_index = adb_collect.collect_adb(
+        serial="demo-serial",
+        out_dir=out_dir,
+        duration=5,
+        since=None,
+        buffers=["main", "system"],
+        include_dmesg=True,
+        include_bugreport=False,
+        runner=fake_runner,
+    )
+
+    assert artifacts_index.exists()
+    artifacts = (artifacts_index).read_text()
+    assert "logcat" in artifacts
+    assert "dmesg" in artifacts
+    # Ensure device info and collect.log exist
+    assert (out_dir / "logs" / "device_info.json").exists()
+    assert (out_dir / "collect.log").exists()
