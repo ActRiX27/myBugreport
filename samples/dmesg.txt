@@ -1,0 +1,2 @@
+<6>[12345.678901] usb 1-1: reset
+[12346.000000] cpu0: thermal warning

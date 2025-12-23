@@ -1,0 +1,1 @@
+{"rule_id": "security.selinux", "ts": null, "level": null, "tag": null, "source": "bugreport", "raw": "01-29 15:13:03.000     0     0 E SELinux: avc: denied { read } for name=\"/data/user/0/com.example.camera\" dev=\"sda\" ino=12345"}

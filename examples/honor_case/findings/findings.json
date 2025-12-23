@@ -1,0 +1,14 @@
+[
+  {
+    "rule_id": "security.selinux",
+    "severity": "high",
+    "evidence": {
+      "hits": 1,
+      "sources": {
+        "bugreport": 1
+      }
+    },
+    "confidence": 0.25,
+    "summary": "权限/SELinux 拒绝"
+  }
+]

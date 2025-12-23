@@ -1,0 +1,3 @@
+{"ts": "08-07 00:30:26.456", "level":"E","tag":"Net","msg":"connection reset by peer","raw":"08-07...","source":"logcat"}
+{"ts": "12345.678","level": "4", "tag":"dmesg","msg":"avc: denied access","raw":"<4>[12345.678] avc: denied access","source":"dmesg"}
+{"ts": null,"level":null,"tag":"bugreport","msg":"FATAL EXCEPTION","raw":"FATAL EXCEPTION stack...","source":"bugreport"}

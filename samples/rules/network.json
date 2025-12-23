@@ -1,0 +1,14 @@
+[
+  {
+    "rule_id": "network.failure",
+    "title": "网络异常",
+    "severity": "warning",
+    "description": "连接重置或 TLS/DNS 失败",
+    "match": {
+      "keywords": ["connection reset", "tls fail", "dns fail", "reset by peer"],
+      "regex": ["(?i)connection reset", "(?i)tls", "(?i)dns"]
+    },
+    "condition": {"level_gte": "W"},
+    "evidence_limit": 10
+  }
+]

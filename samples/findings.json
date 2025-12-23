@@ -1,0 +1,16 @@
+[
+  {
+    "rule_id": "network.failure",
+    "severity": "warning",
+    "confidence": 0.6,
+    "evidence": {"hits": 2, "sources": {"logcat": 2}},
+    "summary": "网络异常"
+  },
+  {
+    "rule_id": "security.selinux",
+    "severity": "high",
+    "confidence": 0.8,
+    "evidence": {"hits": 1, "sources": {"dmesg": 1}},
+    "summary": "权限/SELinux 拒绝"
+  }
+]

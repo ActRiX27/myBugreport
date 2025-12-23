@@ -1,0 +1,44 @@
+{
+  "device": {
+    "serial": "HONORJMM-AL00",
+    "model": "HONOR JMM-AL00",
+    "android_version": null,
+    "build_fingerprint": null,
+    "notes": null
+  },
+  "artifacts": [
+    {
+      "path": "examples/bugreport-HONORJMM-AL00-2024-01-29-15-13-04.txt",
+      "captured_at": "2025-12-23T08:28:47.107547Z",
+      "device": {
+        "serial": "HONORJMM-AL00",
+        "model": "HONOR JMM-AL00",
+        "android_version": null,
+        "build_fingerprint": null,
+        "notes": null
+      },
+      "artifact_type": "bugreport",
+      "sha256": "fbc89f470dc069930941910c7b2342fa2c1e3dc5ac294f7a1682a15e9e33fade",
+      "size_bytes": 908,
+      "command": null,
+      "metadata": null
+    }
+  ],
+  "findings": [
+    {
+      "rule_id": "security.selinux",
+      "severity": "high",
+      "evidence": {
+        "hits": 1,
+        "sources": {
+          "bugreport": 1
+        }
+      },
+      "confidence": 0.25,
+      "summary": "权限/SELinux 拒绝"
+    }
+  ],
+  "generated_at": "2025-12-23T08:28:47.111734Z",
+  "summary": "Simulated HONORJMM bugreport run",
+  "template": null
+}

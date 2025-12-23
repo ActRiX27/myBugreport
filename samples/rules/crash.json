@@ -1,0 +1,11 @@
+[
+  {
+    "rule_id": "crash.anr",
+    "title": "崩溃/ANR",
+    "severity": "high",
+    "description": "检测 crash / ANR 关键词",
+    "match": {"keywords": ["ANR in", "FATAL EXCEPTION", "CRASH"]},
+    "condition": {"level_gte": "E"},
+    "evidence_limit": 20
+  }
+]
