@@ -21,6 +21,19 @@ myBugReport 仍是一个用于对 Android bugreport 文本进行后处理的开�
 python my_bugreport.py <timestamp> [<timestamp> ...] <input_bugreport> <output_file> [context_lines]
 ```
 
+### 安装（本地开发）
+```bash
+pip install -e .
+```
+
+### 运行示例
+```bash
+# 假设当前目录有 rule.txt / rule2.txt / bugreport.txt
+python -m mybugreport.cli "2024-06-21" bugreport.txt out.txt 1
+# 或使用 console_scripts
+datalogic "2024-06-21" bugreport.txt out.txt 1
+```
+
 参数说明：
 - `<timestamp>`：一个或多个时间戳字符串，每个会作为 `grep -e` 模式使用（例如 `2024-06-21`、`12:34:56`）。
 - `<input_bugreport>`：原始 bugreport 文本路径。
@@ -76,3 +89,4 @@ python my_bugreport.py "2024-06-21" "12:34:56" bugreport.txt processed.txt 3
 ## 已知限制
 - 未引入第三方依赖，所有扩展均为可选开关或插拔式接口。
 - CLI 语义保持不变；未默认启用的模块不会影响现有输出。
+- “采集-分析-报告”链路仍处于占位规划阶段（见 `pipeline/`），当前工具主要覆盖 bugreport 文本的处理与可选取证评分接口。
