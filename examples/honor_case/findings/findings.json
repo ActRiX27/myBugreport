@@ -1,0 +1,90 @@
+[
+  {
+    "rule_id": "network.failure",
+    "severity": "warning",
+    "evidence": {
+      "hits": 1,
+      "sources": {
+        "bugreport": 1
+      }
+    },
+    "confidence": 0.25,
+    "summary": "网络异常"
+  },
+  {
+    "rule_id": "crash.anr",
+    "severity": "high",
+    "evidence": {
+      "hits": 1,
+      "sources": {
+        "bugreport": 1
+      }
+    },
+    "confidence": 0.25,
+    "summary": "崩溃/ANR"
+  },
+  {
+    "rule_id": "security.selinux",
+    "severity": "high",
+    "evidence": {
+      "hits": 1,
+      "sources": {
+        "bugreport": 1
+      }
+    },
+    "confidence": 0.25,
+    "summary": "权限/SELinux 拒绝"
+  },
+  {
+    "rule_id": "build.fingerprint",
+    "severity": "info",
+    "evidence": {
+      "fingerprint": "Build fingerprint: HONOR/HONORJMM-AL00/HONORJMM-AL00:11/XXX/20240129:user/release-keys",
+      "count": 1
+    },
+    "confidence": 0.1,
+    "summary": "Build fingerprint detected"
+  },
+  {
+    "rule_id": "dropbox.entries",
+    "severity": "info",
+    "evidence": {
+      "entries": 2
+    },
+    "confidence": 0.1,
+    "summary": "Dropbox entries detected"
+  },
+  {
+    "rule_id": "baseline.stats",
+    "severity": "info",
+    "evidence": {
+      "total": 11,
+      "sources": {
+        "bugreport": 11
+      },
+      "levels": {
+        "unknown": 4,
+        "I": 2,
+        "W": 2,
+        "E": 3
+      }
+    },
+    "confidence": 0.05,
+    "summary": "Record statistics"
+  },
+  {
+    "rule_id": "baseline.top_tags",
+    "severity": "info",
+    "evidence": {
+      "top_tags": {
+        "ActivityManager": 2,
+        "AndroidRuntime": 2,
+        "dropbox": 2,
+        "build_info": 1,
+        "ServiceManager": 1
+      }
+    },
+    "confidence": 0.05,
+    "summary": "Top log tags by count"
+  }
+]

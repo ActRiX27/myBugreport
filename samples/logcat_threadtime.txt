@@ -1,0 +1,2 @@
+08-07 00:30:25.123  1234  1235 I MyTag: hello world
+08-07 00:30:26.456  2234  2235 E Net: failed to connect

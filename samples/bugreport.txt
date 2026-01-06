@@ -1,0 +1,5 @@
+Build fingerprint: google/blueline/blueline:10/QP1A/123:user/release-keys
+==== dropbox entries (timestamp):
+entry1
+entry2
+==== end

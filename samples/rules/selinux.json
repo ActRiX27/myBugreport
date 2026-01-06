@@ -1,0 +1,11 @@
+[
+  {
+    "rule_id": "security.selinux",
+    "title": "权限/SELinux 拒绝",
+    "severity": "high",
+    "description": "发现 avc: denied 或权限拒绝日志",
+    "match": {"keywords": ["avc: denied", "permission denied"]},
+    "condition": {},
+    "evidence_limit": 20
+  }
+]

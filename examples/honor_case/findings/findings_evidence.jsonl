@@ -1,0 +1,5 @@
+{"rule_id": "network.failure", "ts": "01-29 15:13:02.000", "level": "W", "tag": "NetworkMonitor", "source": "bugreport", "raw": "01-29 15:13:02.000  1000  2000 W NetworkMonitor: connection reset by peer while downloading update"}
+{"rule_id": "crash.anr", "ts": "01-29 15:13:01.456", "level": "E", "tag": "AndroidRuntime", "source": "bugreport", "raw": "01-29 15:13:01.456  1000  2000 E AndroidRuntime: FATAL EXCEPTION: main"}
+{"rule_id": "security.selinux", "ts": "01-29 15:13:03.000", "level": "E", "tag": "SELinux", "source": "bugreport", "raw": "01-29 15:13:03.000     0     0 E SELinux: avc: denied { read } for name=\"/data/user/0/com.example.camera\" dev=\"sda\" ino=12345"}
+{"rule_id": "build.fingerprint", "ts": null, "level": null, "tag": "build_info", "source": "bugreport", "raw": "Build fingerprint: HONOR/HONORJMM-AL00/HONORJMM-AL00:11/XXX/20240129:user/release-keys"}
+{"rule_id": "dropbox.entries", "ts": null, "level": null, "tag": "dropbox", "source": "bugreport", "raw": "==== dropbox entries (timestamp):"}
